@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Екологічний слід</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="page-title">Калькулятор екологічного сліду</h1>
+  <div id="info-block" class="info-block hidden"></div>
+  <div id="back-button-container" class="hidden" style="text-align: center; margin-top: 20px;">
+  <button id="back-button">Повернутись</button>
+  </div>
+  <div class="progress-bar" id="progress-bar">
+  <div class="progress-bar-inner" id="progress-inner"></div>
+  </div>
+  <form id="footprint-form" novalidate>
+
+<div class="step active" data-step="1">
+  <h2>Транспорт 🚗</h2>
+  <label for="car-type">🚘 Який у вас автомобіль?</label> 
+  <div class="checkbox-group">
+  <label class="checkbox"><input type="checkbox" id="car-diesel"> Дизельне авто</label>
+  <label class="checkbox"><input type="checkbox" id="car-petrol"> Бензинове авто</label>
+  <label class="checkbox"><input type="checkbox" id="car-gas"> Газове авто</label>
+  <label class="checkbox"><input type="checkbox" id="car-electric"> Електромобіль</label>
+  <label class="checkbox"><input type="checkbox" id="car-none"> Не користуюсь авто</label>
+  </div>
+  <div id="car-km-block" class="animated-block hidden">
+  <label for="car-km">🚙 Скільки км ви проїжджаєте на авто щотижня (усі поїздки разом)?</label>
+  <input type="number" id="car-km" min="0" placeholder="Наприклад: 120" required>
+  </div>
+  <div id="fuel-block" class="animated-block hidden">
+  <label for="fuel-liters">⛽ Скільки літрів пального витрачаєте на тиждень?</label>
+  <input type="number" id="fuel-liters" min="0" step="0.1" placeholder="Наприклад: 35.5" required>
+  </div>
+  <label for="public-transport">🚌 Скільки поїздок громадським транспортом на тиждень?</label>
+  <input type="number" id="public-transport" min="0" placeholder="Наприклад: 10" required>
+  <label for="bike-days">🚴‍♂️ Скільки днів на тиждень ви їздите на велосипеді чи самокаті?</label>
+  <input type="number" id="bike-days" min="0" placeholder="Наприклад: 2" required>
+</div>
+
+<div class="step" data-step="2">
+  <h2>Електроенергія⚡</h2>
+  <label for="electricity">🔌 Скільки кВт·год ви споживаєте на місяць?</label>
+  <input type="number" id="electricity" min="0" placeholder="Наприклад: 160" required>
+  <div id="charge-electric-block" class="hidden-block">
+  <label for="electric-car-kwh">🔌 Скільки кВт·год потрібно для зарядки авто на тиждень?</label>
+  <input type="number" id="electric-car-kwh" min="0" placeholder="Наприклад: 60" required>
+  </div>
+  <label for="electric-heating">🌡️ Ви використовуєте електроопалення?</label>
+  <select id="electric-heating" required>
+    <option value="" disabled selected>···</option>
+    <option value="no">Ні</option>
+    <option value="yes">Так</option>
+  </select>
+  <label for="led-lamps">💡 Частка LED-ламп у вашому освітленні (%):</label>
+  <input type="number" id="led-lamps" min="0" max="100" placeholder="Наприклад:60" required>
+  <label for="computer-hours">🖥️ Скільки годин на день ви використовуєте комп’ютер або телевізор?</label>
+  <input type="number" id="computer-hours" min="0" step="0.1" placeholder="Наприклад: 6" required>
+  <label for="use-electric-cooking">🍳 Ви використовуєте електроплиту для приготування їжі?</label>
+  <select id="use-electric-cooking" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+  </select>
+  <div id="electric-cooking-block" class="animated-block hidden">
+  <label for="electric-cooking">⏱️ Скільки годин на тиждень ви готуєте на електроплиті?</label>
+  <input type="number" id="electric-cooking" min="0" step="0.1" placeholder="Наприклад: 5" required>
+  </div>
+</div>
+
+<div class="step" data-step="2-gas">
+  <h2>Газ 🔥</h2>
+  <label for="gas-m3">📏 Скільки кубів газу ви споживаєте в середньому на місяць?</label>
+  <input type="number" id="gas-m3" min="0" placeholder="Наприклад: 22" required>
+  <div id="gas-auto-block" class="hidden-block">
+  <label for="gas-auto-m3">⛽ Скільки літрів газу витрачаєте на тиждень?</label>
+  <input type="number" id="gas-auto-m3" min="0" step="0.1" placeholder="Наприклад: 10" required>
+  </div>
+  <label for="gas-use-heat">🏠 Чи використовуєте ви газ для опалення приміщення?</label>
+  <select id="gas-use-heat" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+  </select>
+  <label for="gas-use-water">🚿 Чи грієте воду газовою колонкою або котлом?</label>
+  <select id="gas-use-water" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+  </select>
+  <label for="use-gas-cooking">🔥 Ви використовуєте газову плиту для приготування їжі?</label>
+  <select id="use-gas-cooking" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+  </select>
+  <div id="gas-cooking-block" class="animated-block hidden">
+  <label for="gas-cooking-hours">⏱️ Скільки годин на тиждень ви готуєте на газовій плиті?</label>
+  <input type="number" id="gas-cooking-hours" min="0" step="0.1" placeholder="Наприклад: 7" required>
+  </div>
+  
+</div>
+
+
+<div class="step" data-step="3">
+  <h2>Їжа🥗</h2>
+  <label class="question-label">🛒 Де ви зазвичай купуєте продукти?</label>
+  <div class="checkbox-group">
+  <label class="checkbox"><input type="checkbox" name="food-source" value="supermarket"> Супермаркет</label>
+  <label class="checkbox"><input type="checkbox" name="food-source" value="market"> Ринок</label>
+  <label class="checkbox"><input type="checkbox" name="food-source" value="own-garden"> Власне господарство</label>
+  </div>
+  <label for="food-delivery">📦 Скільки разів на тиждень замовляєте їжу?</label>
+  <input type="number" id="food-delivery" min="0" placeholder="Наприклад: 2" required>
+  <label for="meat">🥩 Скільки кг м’яса ви їсте на тиждень?</label>
+  <input type="number" id="meat" step="0.1" min="0" placeholder="Наприклад: 1.5" required>
+  <label for="dairy">🧀 Скільки кг молочних продуктів на тиждень?</label>
+  <input type="number" id="dairy" step="0.1" min="0" placeholder="Наприклад: 2" required>
+  <label for="eggs">🥚 Скільки яєць ви споживаєте щотижня?</label>
+  <input type="number" id="eggs" min="0" placeholder="Наприклад: 6" required>
+  <label for="vegetables">🥦 Скільки кг овочів і фруктів ви споживаєте на тиждень?</label>
+  <input type="number" id="vegetables" min="0" step="0.1" placeholder="Наприклад: 4.2" required>
+</div>
+
+<div class="step" data-step="4">
+  <h2>Вода 🚿</h2>
+  <label for="water-m3">💧 Скільки кубів води ви використовуєте в середньому на місяць?</label>
+  <input type="number" id="water-m3" min="0" step="0.1" placeholder="Наприклад: 4.5" required>
+  <label for="shower-frequency">🔁 Скільки разів на тиждень ви приймаєте душ або ванну?</label>
+  <input type="number" id="shower-frequency" min="0" placeholder="Наприклад: 7" required>
+  <label for="shower-minutes">🛁 Скільки хвилин зазвичай витрачаєте на душ або ванну?</label>
+  <input type="number" id="shower-minutes" min="0" placeholder="Наприклад: 10" required>
+  <label for="washing-machine">👚 Скільки прань на тиждень?</label>
+  <input type="number" id="washing-machine" min="0" placeholder="Наприклад: 3" required>
+  <label for="use-dishwasher">🍽️ Чи є у вас посудомийна машина?</label>
+  <select id="use-dishwasher" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+  </select>
+  <div id="dishwasher-frequency-block" class="animated-block hidden">
+  <label for="dishwasher-uses">🔁 Скільки разів на тиждень ви її використовуєте?</label>
+  <input type="number" id="dishwasher-uses" min="0" placeholder="Наприклад: 3" required>
+  </div>
+  <label for="water-saving">💧 Ви використовуєте водозберігаючі насадки?</label>
+  <select id="water-saving" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+  </select>
+</div>
+
+<div class="step" data-step="5">
+  <h2>Покупки 🛍️</h2>
+  <label for="clothes">👗 Скільки нових речей одягу ви купуєте за рік?</label>
+  <input type="number" id="clothes" min="0" placeholder="Наприклад: 15" required>
+  <label for="shoes">👟 Скільки пар взуття купуєте на рік?</label>
+  <input type="number" id="shoes" min="0" placeholder="Наприклад: 4" required>
+  <label for="gadgets">📱 Скільки нових гаджетів купуєте на рік?</label>
+  <input type="number" id="gadgets" min="0" placeholder="Наприклад: 1" required>
+  <label for="secondhand">♻️ Чи купуєте речі з рук або у секонд-хендах?</label>
+  <select id="secondhand" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="sometimes">Іноді</option>
+    <option value="no">Ні</option>
+  </select>
+  <label for="plastic-bags">🛍️ Скільки пластикових пакетів ви використовуєте на тиждень?</label>
+  <input type="number" id="plastic-bags" min="0" placeholder="Наприклад: 5" required>
+</div>
+
+<div class="step" data-step="6">
+  <h2>Відходи 🗑️</h2>
+  <label for="waste">📦 Скільки кілограмів сміття ви викидаєте щотижня?</label>
+  <input type="number" id="waste" min="0" step="0.1" placeholder="Наприклад: 6" required>
+  <label for="recycling">♻️ Чи сортуєте ви сміття?</label>
+  <select id="recycling" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+  </select>
+  <label for="organic-compost">🌿 Чи компостуєте органічні відходи?</label>
+  <select id="organic-compost" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+  </select>
+  <label for="bottles">🍾 Скільки пляшок/банок здаєте на тиждень?</label>
+  <input type="number" id="bottles" min="0" placeholder="Наприклад: 3" required>
+  <label for="trash-percent">📊 Оціни відсоток сміття, що йде на переробку (%):</label>
+  <input type="number" id="trash-percent" min="0" max="100" placeholder="Наприклад: 35" required>
+</div>
+
+<div class="step" data-step="7">
+  <h2>Побутові звички 🏠</h2>
+  <label for="tv-hours">📺 Скільки годин на день ви дивитесь ТБ, YouTube чи стрімінги?</label>
+  <input type="number" id="tv-hours" min="0" step="0.1" placeholder="Наприклад: 2" required>
+  <label for="heating-temp">🌡️ Яка температура вдома взимку (°C)?</label>
+  <input type="number" id="heating-temp" min="0" max="30" placeholder="Наприклад: 22" required>
+  <label for="ac-use">❄️ Скільки днів на місяць ви використовуєте кондиціонер?</label>
+  <input type="number" id="ac-use" min="0" max="31" placeholder="Наприклад: 8" required>
+  <label for="lights-off">💡 Ви вимикаєте світло, коли виходите з кімнати?</label>
+  <select id="lights-off" required>
+    <option value="" disabled selected>···</option>
+    <option value="always">Завжди</option>
+    <option value="sometimes">Іноді</option>
+    <option value="never">Ніколи</option>
+  </select>
+  <label for="home-insulation">🏡 Чи утеплений ваш будинок або квартира?</label>
+  <select id="home-insulation" required>
+    <option value="" disabled selected>···</option>
+    <option value="yes">Так</option>
+    <option value="no">Ні</option>
+    <option value="partial">Частково</option>
+</select>
+</div>
+
+<div class="navigation">
+      <button type="button" id="prev-button">Назад</button>
+      <button type="button" id="next-button">Далі</button>
+      <button type="submit" id="submit-button" style="display: none;">Розрахувати</button>
+    </div>
+</form>
+
+  <div id="final-result" class="final-result-container" style="display: none;">
+
+  <div id="chart-section" class="chart-section">
+    <div class="chart-area">
+      <canvas id="chart" width="300" height="300"></canvas>
+    </div>
+    <div class="legend-box">
+      <div><span class="legend-color" style="background:#FFCBA4;"></span> Авто — <span id="legend-auto">– кг</span></div>
+      <div><span class="legend-color" style="background:#CAB8FF;"></span> Електрика — <span id="legend-electric">– кг</span></div>
+      <div><span class="legend-color" style="background:#FFEBB4;"></span> Газ — <span id="legend-gas">– кг</span></div>
+      <div><span class="legend-color" style="background:#C1FBA4;"></span> Їжа — <span id="legend-food">– кг</span></div>
+      <div><span class="legend-color" style="background:#A0E7E5;"></span> Вода — <span id="legend-water">– кг</span></div>
+      <div><span class="legend-color" style="background:#FFB5C2;"></span> Покупки — <span id="legend-shopping">– кг</span></div>
+      <div><span class="legend-color" style="background:#B2C9A0;"></span> Відходи — <span id="legend-waste">– кг</span></div>
+      <div><span class="legend-color" style="background:#fffd9e;"></span> Побут — <span id="legend-home">– кг</span></div>
+    </div>
+  </div>
+
+  <div id="result" class="result-block"></div>
+ 
+  <div id="edit-button-container" class="navigation" style="justify-content: center; margin-top: 20px; display: none;">
+    <button id="edit-button">✏️ Редагувати відповіді</button>
+  </div>
+</div>
+
+  <div id="advice-box" class="advice-box"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+  <script src="script.js"></script>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="#" onclick="showInfo('author-ref')">Авторська довідка</a>
+    <a href="#" onclick="showInfo('tech-doc')">Технічна документація</a>
+    <a href="#" onclick="showInfo('resources')">Ресурсні матеріали</a>
+  </div>
+</footer>
+</body>
+</html>
