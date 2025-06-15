@@ -13,6 +13,12 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+document.querySelectorAll("input, select").forEach(el => {
+  el.addEventListener("input", () => {
+    localStorage.setItem(el.id, el.value);
+  });
+});
+
 ["car-diesel", "car-petrol", "car-gas", "car-electric", "car-none"].forEach(id => {
   const el = document.getElementById(id);
   el.addEventListener("change", () => {
@@ -105,6 +111,19 @@ nextBtn.addEventListener("click", () => {
       break;
     }
   }
+ 
+  const checkboxGroups = currentStepEl.querySelectorAll(".checkbox-group");
+    checkboxGroups.forEach(group => {
+  const checkboxes = group.querySelectorAll("input[type='checkbox']");
+  const oneChecked = Array.from(checkboxes).some(cb => cb.checked);
+  if (!oneChecked) {
+    isValid = false;
+    group.classList.add("invalid");
+  } else {
+    group.classList.remove("invalid");
+  }
+});
+
 
   if (isValid && currentStep < steps.length - 1) {
     steps[currentStep].classList.remove("active");

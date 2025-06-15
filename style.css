@@ -77,44 +77,18 @@ select.invalid {
   background-color: #ffebee;
 }
 
-/* Стили для своей подсказки */
-.tooltip-error {
-  position: relative;
-  display: inline-block;
+.checkbox-group.invalid {
+  outline: 2px solid red;
+  border-radius: 5px;
+  padding: 4px;
 }
 
-.tooltip-error .tooltip-text {
-  visibility: hidden;
-  width: max-content;
-  max-width: 220px;
-  background-color: #ff5252;
-  color: white;
-  text-align: center;
-  border-radius: 6px;
-  padding: 6px 10px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%; /* над полем */
-  left: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  font-size: 14px;
-}
-
-.tooltip-error .tooltip-text::after {
-  content: "";
-  position: absolute;
-  top: 100%; /* стрелка вниз */
-  left: 10px;
-  margin-left: -5px;
-  border-width: 6px;
-  border-style: solid;
-  border-color: #ff5252 transparent transparent transparent;
-}
-
-.tooltip-error.show .tooltip-text {
-  visibility: visible;
-  opacity: 1;
+.checkbox-group.invalid::after {
+  content: "Оберіть хоча б один варіант";
+  color: red;
+  font-size: 15px;
+  margin-top: 4px;
+  display: block;
 }
 
 /* ЗАГОЛОВОК */
@@ -246,7 +220,7 @@ button:hover {
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
   margin-top: 5px;
   text-align: center;
-  max-width: 520px;
+  max-width: 550px;
   width: 100%;
   animation: fade-in 0.7s ease;
 }
@@ -283,19 +257,22 @@ button:hover {
 
 /* ДИАГРАММА И ЛЕГЕНДА */
 .chart-section {
-  display: none;
+  display: flex;
   flex-direction: row-reverse;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
-  gap: 25px;
+  gap: 20px;
   margin-top: 30px;
   flex-wrap: nowrap;
-  padding-left: 30px;
+  padding-left: 0;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .chart-area {
   width: 300px;
   height: 300px;
-  margin-right: 8px;
+  margin-right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -308,6 +285,7 @@ button:hover {
   font-size: 15px;
   color: #00796b;
   margin-top: 40px;
+  margin-left: 5px;              
   text-align: left;
   align-items: flex-start;
   min-width: 180px;
